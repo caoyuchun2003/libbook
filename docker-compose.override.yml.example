@@ -1,0 +1,25 @@
+# 开发环境覆盖配置示例
+# 复制此文件为 docker-compose.override.yml 以启用开发模式
+
+version: '3.8'
+
+services:
+  backend:
+    environment:
+      - APP_DEBUG=true
+      - APP_ENV=local
+    volumes:
+      - ./backend:/var/www/html
+      # 开发时挂载 vendor，避免每次都重新安装
+      # - ./backend/vendor:/var/www/html/vendor
+
+  frontend:
+    # 开发模式：使用 Vite 开发服务器
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules

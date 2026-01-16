@@ -1,0 +1,63 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+docker-compose.yml
+docker-compose.override.yml
+docker-compose.override.yml.example
+Dockerfile
+.dockerignore
+
+# 文档
+docs/
+*.md
+!README.md
+
+# 环境变量
+.env
+.env.*
+!env.docker.example
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+logs/
+
+# 临时文件
+tmp/
+temp/
+*.tmp
+
+# Node modules (前端)
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Vendor (后端)
+backend/vendor/
+backend/storage/logs/*
+backend/storage/framework/cache/*
+backend/storage/framework/sessions/*
+backend/storage/framework/views/*
+!backend/storage/framework/.gitkeep
+
+# 测试
+*.test.js
+*.spec.js
+coverage/
+
+# 其他
+node_modules/
+package-lock.json
