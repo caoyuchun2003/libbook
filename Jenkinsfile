@@ -20,11 +20,12 @@ pipeline {
             steps {
                 sh '''
                     docker run --rm \
-                        -v "$PWD/frontend:/app" -w /app \
+                        -v "$PWD:/repo" -w /repo/frontend \
                         -e VITE_BASE=/libbook/ \
                         ${NODE_IMAGE} sh -c "
                             set -e
                             npm ci || npm install
+                            npm run setup-docs
                             npm run build
                         "
                 '''
@@ -60,6 +61,9 @@ pipeline {
                     ssh -o StrictHostKeyChecking=no ${DEPLOY_USER}@${DEPLOY_HOST} bash << 'ENDSSH'
                         set -e
                         cd /opt/apps/libbook
+                        cp -f .env backend/.env 2>/dev/null || true
+                        mkdir -p backend/bootstrap/cache backend/storage/framework/{cache,sessions,views}
+                        chmod -R 777 backend/bootstrap/cache backend/storage
                         if command -v podman-compose >/dev/null 2>&1; then
                             podman-compose down || true
                             podman-compose up -d --build
@@ -70,6 +74,7 @@ pipeline {
                             docker-compose down || true
                             docker-compose up -d --build
                         fi
+                        docker restart libbook_nginx 2>/dev/null || true
                         docker exec nginx nginx -s reload || true
 ENDSSH
                 '''
