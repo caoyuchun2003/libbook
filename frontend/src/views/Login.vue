@@ -63,13 +63,13 @@ const testAccounts = [
   {
     name: '管理员',
     email: 'admin@libbook.com',
-    password: 'password',
+    password: 'admin123',
     role: 'admin',
   },
   {
     name: '普通用户',
     email: 'user@libbook.com',
-    password: 'password',
+    password: 'user123',
     role: 'user',
   },
 ]
