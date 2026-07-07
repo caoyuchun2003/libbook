@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: `${import.meta.env.BASE_URL}api`.replace(/\/+/g, '/'),
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -38,11 +38,12 @@ api.interceptors.response.use(
     
     if (error.response?.status === 401) {
       // 文档查看器是公开的，401 错误不应该跳转到登录页
-      const isPublicRoute = window.location.pathname.startsWith('/docs')
+      const base = import.meta.env.BASE_URL || '/'
+      const isPublicRoute = window.location.pathname.startsWith(`${base}docs`.replace(/\/+/g, '/'))
       if (!isPublicRoute) {
         localStorage.removeItem('token')
         localStorage.removeItem('user')
-        window.location.href = '/login'
+        window.location.href = `${base}login`.replace(/\/+/g, '/')
       }
     }
     return Promise.reject(error)

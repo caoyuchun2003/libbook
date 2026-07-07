@@ -1,0 +1,78 @@
+version: '3.8'
+
+# 统一网关模式：前端由主 Nginx /libbook/ 托管，此处仅 API + 数据库
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: libbook_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-libbook}
+      MYSQL_USER: ${DB_USERNAME:-libbook_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-libbook_password}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_password}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./backend/create-database.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - libbook_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-root_password}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: libbook_backend
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./backend:/var/www/html
+      - backend_storage:/var/www/html/storage
+      - backend_vendor:/var/www/html/vendor
+    environment:
+      - APP_NAME=${APP_NAME:-华腾教育}
+      - APP_ENV=${APP_ENV:-production}
+      - APP_KEY=${APP_KEY:-base64:CHANGE_THIS_IN_PRODUCTION}
+      - APP_DEBUG=${APP_DEBUG:-false}
+      - APP_URL=${APP_URL:-http://180.76.180.105/libbook}
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=${DB_DATABASE:-libbook}
+      - DB_USERNAME=${DB_USERNAME:-libbook_user}
+      - DB_PASSWORD=${DB_PASSWORD:-libbook_password}
+      - CACHE_DRIVER=file
+      - SESSION_DRIVER=file
+      - QUEUE_CONNECTION=sync
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - libbook_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: libbook_nginx
+    restart: unless-stopped
+    ports:
+      - "18080:80"
+    volumes:
+      - ./backend/public:/var/www/html/public:ro
+      - ./docker/nginx/backend.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+    networks:
+      - libbook_network
+
+volumes:
+  mysql_data:
+  backend_storage:
+  backend_vendor:
+
+networks:
+  libbook_network:
+    driver: bridge
