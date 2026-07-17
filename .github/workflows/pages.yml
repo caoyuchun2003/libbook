@@ -43,6 +43,13 @@ jobs:
           VITE_API_BASE: ${{ secrets.VITE_LIBBOOK_API_BASE }}
         run: npm run build
 
+      # GitHub Pages 无服务端回退：直开 /login 等路由会 404，用同内容 404.html 兜住 SPA
+      - name: SPA fallback for GitHub Pages
+        working-directory: frontend
+        run: |
+          cp dist/index.html dist/404.html
+          touch dist/.nojekyll
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: frontend/dist
