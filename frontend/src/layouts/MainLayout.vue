@@ -13,21 +13,24 @@
           </button>
         </div>
         <div class="header-nav">
-          <el-menu
-            :default-active="activeNav"
-            mode="horizontal"
-            router
-            class="header-menu"
-          >
-            <el-menu-item index="/books">
+          <nav class="nav-links" aria-label="主导航">
+            <router-link
+              to="/books"
+              class="nav-link"
+              :class="{ active: activeNav === '/books' }"
+            >
               <el-icon><Reading /></el-icon>
               <span>书城</span>
-            </el-menu-item>
-            <el-menu-item index="/my-bookshelf">
+            </router-link>
+            <router-link
+              to="/my-bookshelf"
+              class="nav-link"
+              :class="{ active: activeNav === '/my-bookshelf' }"
+            >
               <el-icon><Collection /></el-icon>
               <span>书架</span>
-            </el-menu-item>
-          </el-menu>
+            </router-link>
+          </nav>
         </div>
         <div class="header-right">
           <el-dropdown @command="handleCommand">
@@ -53,11 +56,11 @@
       </div>
     </el-header>
 
-    <el-main class="main-content">
+    <el-main class="main-content" :class="{ 'is-reader': isReader }">
       <router-view />
     </el-main>
 
-    <el-footer class="main-footer">
+    <el-footer v-if="!isReader" class="main-footer">
       <div class="footer-content">
         <div class="footer-main">
           <div class="footer-left">
@@ -100,6 +103,8 @@ const activeNav = computed(() => {
   if (route.path.startsWith('/books')) return '/books'
   return '/books'
 })
+
+const isReader = computed(() => route.name === 'BookReader')
 
 const handleCommand = async (command) => {
   if (command === 'logout') {
@@ -197,31 +202,35 @@ const handleCommand = async (command) => {
   min-width: 0;
 }
 
-.header-menu {
-  background: transparent !important;
-  border: none !important;
-}
-
-:deep(.header-menu .el-menu-item) {
-  color: rgba(255, 255, 255, 0.82) !important;
-  font-size: 15px !important;
-  font-weight: 500 !important;
+.nav-links {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
   height: 72px;
-  line-height: 72px;
-  padding: 0 22px !important;
-  border: none !important;
-  background: transparent !important;
-  transition: color 0.2s, background 0.2s;
 }
 
-:deep(.header-menu .el-menu-item:hover),
-:deep(.header-menu .el-menu-item.is-active) {
-  color: #fff !important;
-  background: rgba(255, 255, 255, 0.1) !important;
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
 }
 
-:deep(.header-menu .el-menu-item.is-active) {
-  box-shadow: inset 0 -2px 0 var(--yc-accent);
+.nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-link.active {
+  color: #fff;
+  border-bottom-color: var(--yc-accent);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .header-right {
@@ -258,6 +267,13 @@ const handleCommand = async (command) => {
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
+}
+
+.main-content.is-reader {
+  max-width: none;
+  padding: 0;
+  min-height: calc(100vh - 72px);
+  background: var(--yc-paper);
 }
 
 .main-footer {
@@ -356,16 +372,15 @@ const handleCommand = async (command) => {
     width: 100%;
   }
 
-  .header-menu {
+  .nav-links {
     width: 100%;
+    height: 48px;
   }
 
-  :deep(.header-menu .el-menu-item) {
-    height: 48px;
-    line-height: 48px;
-    padding: 0 16px !important;
+  .nav-link {
     flex: 1;
     justify-content: center;
+    padding: 0 12px;
   }
 
   .main-content {
