@@ -5,14 +5,12 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\BookChapterResource;
+use App\Support\BookCover;
 
 class BookResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        // 默认封面URL
-        $defaultCover = 'https://www.xinsiketang.com/upload/books/images/c41b38efa3492d3f1bce5873438829a1.jpeg';
-        
         return [
             'id' => $this->id,
             'title' => $this->title,
@@ -24,7 +22,9 @@ class BookResource extends JsonResource
             'chapters' => $this->whenLoaded('chapters', function () {
                 return BookChapterResource::collection($this->chapters);
             }),
-            'cover' => $this->cover ?: $defaultCover,
+            'cover' => BookCover::isSafeCustom($this->cover) && !str_starts_with((string) $this->cover, 'data:')
+                ? $this->cover
+                : null,
             'category' => [
                 'id' => $this->category->id,
                 'name' => $this->category->name,

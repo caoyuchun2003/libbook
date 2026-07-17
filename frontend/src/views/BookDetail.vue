@@ -13,22 +13,7 @@
       <!-- 书籍封面和基本信息 -->
       <div class="book-hero">
         <div class="cover-container">
-          <el-image
-            v-if="book.cover"
-            :src="book.cover"
-            class="book-cover-image"
-            fit="cover"
-            :preview-src-list="[book.cover]"
-          >
-            <template #error>
-              <div class="cover-placeholder">
-                <el-icon :size="50"><Picture /></el-icon>
-              </div>
-            </template>
-          </el-image>
-          <div v-else class="cover-placeholder">
-            <el-icon :size="50"><Picture /></el-icon>
-          </div>
+          <BookCover :book="book" image-class="book-cover-image" />
         </div>
         
         <div class="book-basic-info">
@@ -160,7 +145,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { booksApi } from '@/api/books'
 import { chaptersApi } from '@/api/chapters'
 import { ElMessage } from 'element-plus'
-import { ArrowLeft, ArrowRight, Picture, Document, UserFilled, InfoFilled, User, List, Reading } from '@element-plus/icons-vue'
+import { ArrowLeft, ArrowRight, Document, UserFilled, InfoFilled, User, List, Reading } from '@element-plus/icons-vue'
+import BookCover from '@/components/BookCover.vue'
 
 const route = useRoute()
 const router = useRouter()

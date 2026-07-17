@@ -1,5 +1,2 @@
-https://dev.xinsiketang.com/upload/books/images/bd11effeaeab835faf36cd64f780564c.png
-https://dev.xinsiketang.com/upload/books/images/example1.png
-https://dev.xinsiketang.com/upload/books/images/example2.png
-https://dev.xinsiketang.com/upload/books/images/example3.png
-https://dev.xinsiketang.com/upload/books/images/example4.png
+# 已停用：不再提供第三方封面示例链接（版权风险）
+# 请运行 php artisan books:sanitize-covers

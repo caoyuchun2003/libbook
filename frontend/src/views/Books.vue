@@ -72,20 +72,7 @@
           @click="viewBook(book.id)"
         >
           <div class="book-cover-wrapper">
-            <el-image
-              :src="book.cover"
-              fit="cover"
-              class="book-cover"
-              :preview-src-list="[book.cover]"
-              lazy
-            >
-              <template #error>
-                <div class="cover-error">
-                  <el-icon><Picture /></el-icon>
-                  <span>加载失败</span>
-                </div>
-              </template>
-            </el-image>
+            <BookCover :book="book" class="book-cover" lazy />
           </div>
           <div class="book-info">
             <h3 class="book-title" :title="book.title">{{ book.title }}</h3>
@@ -125,7 +112,8 @@ import { useRouter } from 'vue-router'
 import { booksApi } from '@/api/books'
 import { categoriesApi } from '@/api/categories'
 import { ElMessage } from 'element-plus'
-import { Search, Picture } from '@element-plus/icons-vue'
+import { Search } from '@element-plus/icons-vue'
+import BookCover from '@/components/BookCover.vue'
 
 const router = useRouter()
 

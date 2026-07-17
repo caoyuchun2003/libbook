@@ -13,12 +13,7 @@
         @click="viewBook(book.id)"
       >
         <div class="book-cover-wrapper">
-          <el-image
-            :src="book.cover"
-            fit="cover"
-            class="book-cover"
-            :preview-src-list="[book.cover]"
-          />
+          <BookCover :book="book" class="book-cover" />
         </div>
         <div class="book-info">
           <h3 class="book-title">{{ book.title }}</h3>
@@ -38,6 +33,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { booksApi } from '@/api/books'
 import { ElMessage } from 'element-plus'
+import BookCover from '@/components/BookCover.vue'
 
 const router = useRouter()
 const books = ref([])

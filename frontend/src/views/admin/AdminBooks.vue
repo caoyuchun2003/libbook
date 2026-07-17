@@ -30,16 +30,11 @@
       <el-table :data="books" style="width: 100%; margin-top: 20px" v-loading="loading">
         <el-table-column label="封面" width="100">
           <template #default="scope">
-            <el-image
-              v-if="scope.row.cover"
-              :src="scope.row.cover"
-              style="width: 60px; height: 80px; object-fit: cover; border-radius: 4px;"
-              fit="cover"
-              :preview-src-list="[scope.row.cover]"
+            <BookCover
+              :book="scope.row"
+              :preview="true"
+              image-style="width: 60px; height: 80px; border-radius: 4px;"
             />
-            <div v-else style="width: 60px; height: 80px; background: #f5f5f5; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #999;">
-              无封面
-            </div>
           </template>
         </el-table-column>
         <el-table-column prop="title" label="标题" />
@@ -81,6 +76,7 @@ import { ref, onMounted } from 'vue'
 import { booksApi } from '@/api/books'
 import { categoriesApi } from '@/api/categories'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import BookCover from '@/components/BookCover.vue'
 
 const loading = ref(false)
 const books = ref([])

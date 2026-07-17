@@ -8,24 +8,20 @@ use App\Models\Book;
 class UpdateBookCoversDefault extends Seeder
 {
     /**
-     * 为所有没有封面的书籍设置默认封面
+     * 清除外链封面，由 API 生成无版权占位封面
      */
     public function run(): void
     {
-        $defaultCover = 'https://www.xinsiketang.com/upload/books/images/c41b38efa3492d3f1bce5873438829a1.jpeg';
-        
-        $booksWithoutCover = Book::where(function($query) {
-            $query->whereNull('cover')
-                  ->orWhere('cover', '');
-        })->get();
-        
-        $count = 0;
-        foreach ($booksWithoutCover as $book) {
-            $book->cover = $defaultCover;
-            $book->save();
-            $count++;
-        }
-        
-        $this->command->info("已为 {$count} 本图书设置默认封面");
+        $count = Book::query()
+            ->where(function ($query) {
+                $query->where('cover', 'like', '%xinsiketang.com%')
+                    ->orWhere('cover', 'like', '%doubanio.com%')
+                    ->orWhere('cover', 'like', '%douban.com%')
+                    ->orWhereNull('cover')
+                    ->orWhere('cover', '');
+            })
+            ->update(['cover' => null]);
+
+        $this->command->info("已清理/重置 {$count} 本图书封面（使用自生成占位图）");
     }
 }

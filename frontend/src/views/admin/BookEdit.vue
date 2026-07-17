@@ -61,17 +61,13 @@
             <el-row :gutter="20">
               <el-col :span="12">
                 <el-form-item label="封面" prop="cover">
-                  <el-input v-model="bookForm.cover" placeholder="请输入封面图片 URL" />
+                  <el-input v-model="bookForm.cover" placeholder="自有封面 URL（可选，勿填第三方版权图）" />
                   <div style="margin-top: 10px;">
-                    <el-image
-                      v-if="bookForm.cover"
-                      :src="bookForm.cover"
-                      style="width: 120px; height: 160px; object-fit: cover; border-radius: 4px; border: 1px solid #dcdfe6;"
-                      fit="cover"
+                    <BookCover
+                      :book="{ ...bookForm, id: route.params.id }"
+                      :preview="false"
+                      image-style="width: 120px; height: 160px; border-radius: 4px; border: 1px solid #dcdfe6;"
                     />
-                    <div v-else style="width: 120px; height: 160px; background: #f5f5f5; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #999; border: 1px solid #dcdfe6;">
-                      预览
-                    </div>
                   </div>
                 </el-form-item>
               </el-col>
@@ -219,6 +215,8 @@ import { categoriesApi } from '@/api/categories'
 import { chaptersApi } from '@/api/chapters'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { ArrowLeft, Plus, Refresh } from '@element-plus/icons-vue'
+import BookCover from '@/components/BookCover.vue'
+import { isBlockedCoverUrl } from '@/utils/bookCover'
 
 const route = useRoute()
 const router = useRouter()
@@ -294,7 +292,9 @@ const loadBook = async () => {
       description: book.description || '',
       content_intro: book.content_intro || '',
       author_intro: book.author_intro || '',
-      cover: book.cover || '',
+      cover: (book.cover && !book.cover.startsWith('data:') && !isBlockedCoverUrl(book.cover))
+        ? book.cover
+        : '',
       published_at: book.published_at || null,
     })
   } catch (error) {
