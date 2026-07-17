@@ -66,6 +66,9 @@ import { ElMessage } from 'element-plus'
 const router = useRouter()
 const authStore = useAuthStore()
 
+const formRef = ref(null)
+const loading = ref(false)
+
 const testAccounts = [
   { name: '管理员', email: 'admin@libbook.com', password: 'admin123' },
   { name: '普通用户', email: 'user@libbook.com', password: 'user123' },
