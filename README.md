@@ -47,6 +47,14 @@ npm run dev
 - [设计文档](docs/DESIGN.md)
 - [API 接口文档](docs/API.md)
 - [用户使用指南](docs/USER_GUIDE.md)
+- [GitHub Pages 部署](DEPLOY_PAGES.md)
+
+## 部署方式
+
+| 组件 | 目标 |
+|------|------|
+| 前端 | GitHub Pages（`libbook.yuchuntest.com`） |
+| API | 百度云 `/libbook/api` + CFC HTTPS 代理 |
 
 ## 开发
 

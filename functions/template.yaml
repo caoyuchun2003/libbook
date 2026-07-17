@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: BCE::Serverless-2018-10-31
+Description: Libbook HTTPS proxy — Pages to BCC via CFC
+
+Resources:
+  LibbookProxyFunction:
+    Type: BCE::Serverless::Function
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs12
+      CodeUri: ./
+      Description: Proxy /libbook/api to Baidu BCC HTTP
+      MemorySize: 256
+      Timeout: 30
+      Environment:
+        Variables:
+          UPSTREAM_BASE: 'http://180.76.180.105'
+          UPSTREAM_PREFIX: '/libbook/api'
+          CORS_ORIGINS: 'https://libbook.yuchuntest.com,https://caoyuchun2003.github.io,http://localhost:5173'
+      Events:
+        RootHttp:
+          Type: HTTP
+          Properties:
+            ResourcePath: /
+            Method:
+              - GET
+              - OPTIONS
+            AuthType: anonymous
+        ApiRootHttp:
+          Type: HTTP
+          Properties:
+            ResourcePath: /libbook/api
+            Method:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            AuthType: anonymous
+        ApiProxyHttp:
+          Type: HTTP
+          Properties:
+            ResourcePath: /libbook/api/{proxy+}
+            Method:
+              - GET
+              - POST
+              - PUT
+              - PATCH
+              - DELETE
+              - OPTIONS
+            AuthType: anonymous

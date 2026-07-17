@@ -1,10 +1,18 @@
 import axios from 'axios'
 
+function resolveApiBase() {
+  const configured = import.meta.env.VITE_API_BASE?.replace(/\/$/, '')
+  if (configured) return configured
+  // 与 Vite base 对齐：/libbook/ → /libbook/api ；/ → /api
+  const base = import.meta.env.BASE_URL || '/'
+  return `${base}api`.replace(/\/+/g, '/')
+}
+
 const api = axios.create({
-  baseURL: `${import.meta.env.BASE_URL}api`.replace(/\/+/g, '/'),
+  baseURL: resolveApiBase(),
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
+    Accept: 'application/json',
   },
 })
 
@@ -26,20 +34,20 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // 处理连接错误（后端未启动）
     if (error.code === 'ECONNREFUSED' || error.message?.includes('Network Error')) {
-      console.error('无法连接到后端服务器，请确保后端服务正在运行 (http://localhost:8000)')
+      console.error('无法连接到后端服务器')
       return Promise.reject({
         ...error,
         message: '无法连接到服务器，请检查后端服务是否已启动',
-        isConnectionError: true
+        isConnectionError: true,
       })
     }
-    
+
     if (error.response?.status === 401) {
-      // 文档查看器是公开的，401 错误不应该跳转到登录页
       const base = import.meta.env.BASE_URL || '/'
-      const isPublicRoute = window.location.pathname.startsWith(`${base}docs`.replace(/\/+/g, '/'))
+      const isPublicRoute = window.location.pathname.startsWith(
+        `${base}docs`.replace(/\/+/g, '/')
+      )
       if (!isPublicRoute) {
         localStorage.removeItem('token')
         localStorage.removeItem('user')
