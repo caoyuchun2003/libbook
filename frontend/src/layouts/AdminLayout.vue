@@ -3,7 +3,7 @@
     <el-header class="admin-header">
       <div class="header-content">
         <div class="header-left">
-          <h2>📚 华腾教育 后台管理</h2>
+          <h2>📚 宇春书城 后台管理</h2>
         </div>
         <div class="header-right">
           <span>管理员：{{ authStore.user?.name }}</span>

@@ -35,7 +35,7 @@ services:
       - backend_storage:/var/www/html/storage
       - backend_vendor:/var/www/html/vendor
     environment:
-      - APP_NAME=${APP_NAME:-华腾教育}
+      - APP_NAME=${APP_NAME:-宇春书城}
       - APP_ENV=${APP_ENV:-production}
       - APP_KEY=${APP_KEY:-base64:CHANGE_THIS_IN_PRODUCTION}
       - APP_DEBUG=${APP_DEBUG:-false}

@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard">
-    <h2>欢迎使用 华腾教育 图书管理系统</h2>
+    <h2>欢迎使用 宇春书城 图书管理系统</h2>
     <el-row :gutter="20" style="margin-top: 20px">
       <el-col :span="8">
         <el-card>

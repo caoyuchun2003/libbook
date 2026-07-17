@@ -5,7 +5,7 @@
 set -e
 
 echo "=========================================="
-echo "  华腾教育系统 - Docker 启动脚本"
+echo "  宇春书城系统 - Docker 启动脚本"
 echo "=========================================="
 echo ""
 
@@ -25,7 +25,7 @@ fi
 if [ ! -f .env ]; then
     echo "⚠️  未找到 .env 文件，正在创建..."
     cat > .env << EOF
-APP_NAME=华腾教育
+APP_NAME=宇春书城
 APP_ENV=production
 APP_KEY=
 APP_DEBUG=false

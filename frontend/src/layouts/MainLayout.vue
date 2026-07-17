@@ -4,7 +4,7 @@
     <el-header class="main-header">
       <div class="header-content">
         <div class="header-left">
-          <h1 class="logo" @click="$router.push('/books')">📚 华腾教育</h1>
+          <h1 class="logo" @click="$router.push('/books')">📚 宇春书城</h1>
         </div>
         <div class="header-nav">
           <el-menu
@@ -61,7 +61,7 @@
       <div class="footer-content">
         <div class="footer-main">
           <div class="footer-left">
-            <h3 class="footer-title">📚 华腾教育</h3>
+            <h3 class="footer-title">📚 宇春书城</h3>
             <p class="footer-desc">专业的图书管理系统</p>
           </div>
           <div class="footer-links">
@@ -77,7 +77,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© 2024 华腾教育 - 图书管理系统 | All Rights Reserved</p>
+          <p>© 2026 宇春书城 - 图书管理系统 | All Rights Reserved</p>
         </div>
       </div>
     </el-footer>

@@ -1,7 +1,7 @@
 {
     "name": "libbook/backend",
     "type": "project",
-    "description": "华腾教育 Backend API",
+    "description": "宇春书城 Backend API",
     "keywords": ["laravel", "api", "library"],
     "license": "MIT",
     "require": {

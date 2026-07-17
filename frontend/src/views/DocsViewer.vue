@@ -3,7 +3,7 @@
     <el-header class="docs-header">
       <div class="header-content">
         <div class="header-left">
-          <h2>📚 华腾教育项目文档</h2>
+          <h2>📚 宇春书城项目文档</h2>
         </div>
         <div class="header-right">
           <el-button @click="goHome" type="primary" plain>返回首页</el-button>
