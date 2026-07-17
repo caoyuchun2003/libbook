@@ -3,7 +3,7 @@
     <el-header class="admin-header">
       <div class="header-content">
         <div class="header-left">
-          <h2>📚 宇春书城 后台管理</h2>
+          <h2>宇春书城 · 后台</h2>
         </div>
         <div class="header-right">
           <span>管理员：{{ authStore.user?.name }}</span>
@@ -78,7 +78,7 @@ const goToUserView = () => {
 
 <style scoped>
 .admin-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--yc-ink);
   color: white;
   padding: 0 20px;
 }
@@ -92,8 +92,10 @@ const goToUserView = () => {
 
 .header-left h2 {
   margin: 0;
+  font-family: var(--yc-font-display);
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 .header-right {
@@ -103,8 +105,8 @@ const goToUserView = () => {
 }
 
 .admin-sidebar {
-  background-color: #f5f5f5;
-  border-right: 1px solid #e4e7ed;
+  background-color: var(--yc-surface);
+  border-right: 1px solid var(--yc-line);
 }
 
 .admin-menu {
@@ -114,6 +116,6 @@ const goToUserView = () => {
 
 .admin-content {
   padding: 20px;
-  background-color: #fafafa;
+  background-color: var(--yc-paper);
 }
 </style>

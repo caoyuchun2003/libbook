@@ -1,15 +1,23 @@
 <template>
-  <div class="my-bookshelf">
-    <h2>我的书架</h2>
-    <el-empty v-if="books.length === 0" description="书架空空如也，快去书城看看吧~" :image-size="200">
-      <el-button type="primary" size="large" @click="$router.push('/books')">去书城</el-button>
+  <div class="my-bookshelf" v-loading="loading">
+    <div class="page-header">
+      <h2>我的书架</h2>
+      <p class="page-subtitle">收藏与常读的书都在这里</p>
+    </div>
+
+    <el-empty
+      v-if="!loading && books.length === 0"
+      description="书架还是空的，去书城挑一本吧"
+      :image-size="140"
+    >
+      <el-button type="primary" @click="$router.push('/books')">去书城</el-button>
     </el-empty>
+
     <div v-else class="books-grid">
-      <el-card
+      <article
         v-for="book in books"
         :key="book.id"
         class="book-card"
-        shadow="hover"
         @click="viewBook(book.id)"
       >
         <div class="book-cover-wrapper">
@@ -19,11 +27,11 @@
           <h3 class="book-title">{{ book.title }}</h3>
           <p class="book-author">{{ book.author }}</p>
           <div class="book-meta">
-            <el-tag size="small">{{ book.category?.name }}</el-tag>
+            <span class="book-cat">{{ book.category?.name }}</span>
             <span v-if="book.price" class="book-price">¥{{ book.price }}</span>
           </div>
         </div>
-      </el-card>
+      </article>
     </div>
   </div>
 </template>
@@ -46,8 +54,6 @@ onMounted(() => {
 const loadBookshelf = async () => {
   loading.value = true
   try {
-    // 这里可以后续扩展为获取用户收藏的图书
-    // 目前先显示所有图书作为示例
     const res = await booksApi.getBooks({ per_page: 20 })
     books.value = res.data.data || []
   } catch (error) {
@@ -64,82 +70,78 @@ const viewBook = (id) => {
 
 <style scoped>
 .my-bookshelf {
-  padding: 30px;
-  min-height: calc(100vh - 120px);
   width: 100%;
-  max-width: 100%;
 }
 
-h2 {
-  margin-bottom: 30px;
-  color: #303133;
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-header h2 {
+  margin: 0 0 8px;
   font-size: 36px;
-  font-weight: 700;
-  letter-spacing: 1px;
+  color: var(--yc-text);
+  letter-spacing: 0.06em;
+}
+
+.page-subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--yc-muted);
 }
 
 .books-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 30px;
-  margin-top: 30px;
-  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: 28px 20px;
 }
 
 .book-card {
   cursor: pointer;
-  transition: all 0.3s;
-  border-radius: 12px;
-  overflow: hidden;
-  padding: 20px;
-  width: 100%;
-  min-width: 220px;
+  transition: transform 0.25s ease;
 }
 
 .book-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
 }
 
 .book-cover-wrapper {
   width: 100%;
-  padding-top: 150%;
+  padding-top: 140%;
   position: relative;
-  margin-bottom: 16px;
-  border-radius: 8px;
+  margin-bottom: 12px;
+  border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--yc-surface);
+  box-shadow: 0 8px 24px rgba(22, 58, 60, 0.08);
+}
+
+.book-card:hover .book-cover-wrapper {
+  box-shadow: 0 12px 28px rgba(22, 58, 60, 0.14);
 }
 
 .book-cover {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  border-radius: 8px;
-}
-
-.book-info {
-  text-align: center;
-  padding: 0 8px;
 }
 
 .book-title {
-  font-size: 18px;
+  font-family: var(--yc-font-display);
+  font-size: 15px;
   font-weight: 600;
-  margin: 0 0 8px 0;
-  color: #303133;
+  margin: 0 0 4px;
+  color: var(--yc-text);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  line-height: 1.4;
 }
 
 .book-author {
-  font-size: 15px;
-  color: #909399;
-  margin: 0 0 12px 0;
+  font-size: 13px;
+  color: var(--yc-muted);
+  margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -149,63 +151,29 @@ h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 12px;
+  margin-top: 6px;
+  gap: 8px;
 }
 
-.book-meta :deep(.el-tag) {
-  font-size: 14px;
-  padding: 6px 12px;
+.book-cat {
+  font-size: 12px;
+  color: var(--yc-ink-soft);
 }
 
 .book-price {
-  font-size: 18px;
-  color: #f56c6c;
-  font-weight: bold;
-}
-
-@media (max-width: 1400px) {
-  .books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-}
-
-@media (max-width: 1200px) {
-  .books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 25px;
-  }
+  font-size: 14px;
+  color: var(--yc-accent);
+  font-weight: 600;
 }
 
 @media (max-width: 768px) {
-  .my-bookshelf {
-    padding: 20px;
-  }
-
-  h2 {
+  .page-header h2 {
     font-size: 28px;
-    margin-bottom: 20px;
   }
 
   .books-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
-
-  .book-card {
-    min-width: 160px;
-  }
-
-  .book-title {
-    font-size: 16px;
-  }
-
-  .book-author {
-    font-size: 14px;
-  }
-
-  .book-price {
-    font-size: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 20px 14px;
   }
 }
 </style>

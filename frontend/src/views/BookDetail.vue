@@ -240,7 +240,7 @@ const goToChapter = (chapterId) => {
 
 <style scoped>
 .book-detail-page {
-  padding: 20px;
+  padding: 8px 0 24px;
   max-width: 1000px;
   margin: 0 auto;
   min-height: calc(100vh - 160px);
@@ -248,22 +248,23 @@ const goToChapter = (chapterId) => {
 
 .back-button {
   margin-bottom: 30px;
-  color: #606266;
+  color: var(--yc-ink-soft);
   font-size: 15px;
   padding: 8px 0;
   transition: all 0.3s;
 }
 
 .back-button:hover {
-  color: #409eff;
+  color: var(--yc-ink);
   transform: translateX(-4px);
 }
 
 .book-content {
-  background: #fff;
-  border-radius: 16px;
-  padding: 40px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  background: var(--yc-surface);
+  border-radius: 12px;
+  padding: 36px;
+  border: 1px solid var(--yc-line);
+  box-shadow: none;
 }
 
 /* 书籍头部区域 */
@@ -273,7 +274,7 @@ const goToChapter = (chapterId) => {
   gap: 40px;
   margin-bottom: 50px;
   padding-bottom: 40px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--yc-line);
   align-items: start;
 }
 
@@ -284,27 +285,27 @@ const goToChapter = (chapterId) => {
 .book-cover-image {
   width: 200px;
   height: 280px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+  box-shadow: 0 12px 28px rgba(22, 58, 60, 0.14);
   transition: transform 0.3s ease;
   cursor: pointer;
 }
 
 .book-cover-image:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 16px 36px rgba(22, 58, 60, 0.18);
 }
 
 .cover-placeholder {
   width: 200px;
   height: 280px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e8ebf0 100%);
+  background: linear-gradient(135deg, var(--yc-paper) 0%, #e8ebf0 100%);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #c0c4cc;
-  border: 1px solid #e4e7ed;
+  border: 1px solid var(--yc-line);
 }
 
 .book-basic-info {
@@ -315,17 +316,18 @@ const goToChapter = (chapterId) => {
 }
 
 .book-title {
+  font-family: var(--yc-font-display);
   font-size: 32px;
   font-weight: 700;
-  color: #303133;
+  color: var(--yc-text);
   margin: 0;
-  line-height: 1.4;
-  letter-spacing: -0.5px;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
 }
 
 .book-subtitle {
   font-size: 16px;
-  color: #909399;
+  color: var(--yc-muted);
   margin: 12px 0 0 0;
   line-height: 1.6;
   font-weight: 400;
@@ -336,12 +338,12 @@ const goToChapter = (chapterId) => {
   align-items: center;
   gap: 8px;
   font-size: 18px;
-  color: #606266;
+  color: var(--yc-ink-soft);
   margin-top: 8px;
 }
 
 .book-author .el-icon {
-  color: #909399;
+  color: var(--yc-muted);
 }
 
 .book-meta {
@@ -360,7 +362,7 @@ const goToChapter = (chapterId) => {
 .book-price {
   font-size: 24px;
   font-weight: 700;
-  color: #f56c6c;
+  color: var(--yc-accent);
 }
 
 .book-extra-info {
@@ -369,7 +371,7 @@ const goToChapter = (chapterId) => {
   gap: 8px;
   margin-top: 16px;
   padding-top: 20px;
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid var(--yc-line);
 }
 
 .book-actions {
@@ -397,11 +399,11 @@ const goToChapter = (chapterId) => {
 }
 
 .info-label {
-  color: #909399;
+  color: var(--yc-muted);
 }
 
 .info-value {
-  color: #606266;
+  color: var(--yc-ink-soft);
 }
 
 /* 作者简介侧边栏 */
@@ -421,17 +423,17 @@ const goToChapter = (chapterId) => {
   margin-bottom: 16px;
   font-size: 16px;
   font-weight: 600;
-  color: #303133;
+  color: var(--yc-text);
 }
 
 .sidebar-title .title-icon {
   font-size: 18px;
-  color: #409eff;
+  color: var(--yc-ink);
 }
 
 .sidebar-content {
   line-height: 1.8;
-  color: #606266;
+  color: var(--yc-ink-soft);
   font-size: 14px;
 }
 
@@ -444,7 +446,7 @@ const goToChapter = (chapterId) => {
 .sidebar-content :deep(h3) {
   font-size: 16px;
   font-weight: 600;
-  color: #303133;
+  color: var(--yc-text);
   margin: 12px 0 8px 0;
 }
 
@@ -459,7 +461,7 @@ const goToChapter = (chapterId) => {
 }
 
 .sidebar-content :deep(strong) {
-  color: #303133;
+  color: var(--yc-text);
   font-weight: 600;
 }
 
@@ -475,10 +477,10 @@ const goToChapter = (chapterId) => {
 }
 
 .sidebar-content :deep(blockquote) {
-  border-left: 3px solid #409eff;
+  border-left: 3px solid var(--yc-ink);
   padding: 10px 14px;
   margin: 12px 0;
-  background: #f0f7ff;
+  background: rgba(22, 58, 60, 0.06);
   border-radius: 4px;
   font-size: 13px;
 }
@@ -499,7 +501,7 @@ const goToChapter = (chapterId) => {
   margin-bottom: 20px;
   font-size: 20px;
   font-weight: 600;
-  color: #303133;
+  color: var(--yc-text);
 }
 
 /* Tab 容器样式 */
@@ -516,7 +518,7 @@ const goToChapter = (chapterId) => {
 .custom-tabs :deep(.el-tabs__header) {
   margin: 0;
   background: #fafbfc;
-  border-bottom: 1px solid #e4e7ed;
+  border-bottom: 1px solid var(--yc-line);
 }
 
 .custom-tabs :deep(.el-tabs__nav-wrap) {
@@ -528,22 +530,22 @@ const goToChapter = (chapterId) => {
   line-height: 56px;
   font-size: 16px;
   font-weight: 500;
-  color: #606266;
+  color: var(--yc-ink-soft);
   padding: 0 24px;
   transition: all 0.3s;
 }
 
 .custom-tabs :deep(.el-tabs__item:hover) {
-  color: #409eff;
+  color: var(--yc-ink);
 }
 
 .custom-tabs :deep(.el-tabs__item.is-active) {
-  color: #409eff;
+  color: var(--yc-ink);
   font-weight: 600;
 }
 
 .custom-tabs :deep(.el-tabs__active-bar) {
-  background-color: #409eff;
+  background-color: var(--yc-ink);
   height: 3px;
 }
 
@@ -569,12 +571,12 @@ const goToChapter = (chapterId) => {
 
 .title-icon {
   font-size: 22px;
-  color: #409eff;
+  color: var(--yc-ink);
 }
 
 .rich-content {
   line-height: 1.9;
-  color: #606266;
+  color: var(--yc-ink-soft);
   font-size: 16px;
   text-align: justify;
 }
@@ -587,23 +589,23 @@ const goToChapter = (chapterId) => {
 .rich-content :deep(h1) {
   font-size: 22px;
   font-weight: 700;
-  color: #303133;
+  color: var(--yc-text);
   margin: 24px 0 16px 0;
   padding-bottom: 8px;
-  border-bottom: 2px solid #e4e7ed;
+  border-bottom: 2px solid var(--yc-line);
 }
 
 .rich-content :deep(h2) {
   font-size: 20px;
   font-weight: 600;
-  color: #303133;
+  color: var(--yc-text);
   margin: 20px 0 14px 0;
 }
 
 .rich-content :deep(h3) {
   font-size: 18px;
   font-weight: 600;
-  color: #303133;
+  color: var(--yc-text);
   margin: 18px 0 12px 0;
 }
 
@@ -619,13 +621,13 @@ const goToChapter = (chapterId) => {
 }
 
 .rich-content :deep(strong) {
-  color: #303133;
+  color: var(--yc-text);
   font-weight: 600;
 }
 
 .rich-content :deep(em) {
   font-style: italic;
-  color: #606266;
+  color: var(--yc-ink-soft);
 }
 
 .rich-content :deep(img) {
@@ -637,18 +639,18 @@ const goToChapter = (chapterId) => {
 }
 
 .rich-content :deep(blockquote) {
-  border-left: 3px solid #409eff;
+  border-left: 3px solid var(--yc-ink);
   padding: 12px 18px;
   margin: 20px 0;
-  background: #f0f7ff;
+  background: rgba(22, 58, 60, 0.06);
   border-radius: 4px;
-  color: #606266;
+  color: var(--yc-ink-soft);
   font-style: italic;
   font-size: 15px;
 }
 
 .simple-text {
-  color: #606266;
+  color: var(--yc-ink-soft);
   font-size: 16px;
   line-height: 1.9;
   margin: 0;
@@ -730,13 +732,13 @@ const goToChapter = (chapterId) => {
   padding: 12px;
   background: #fafbfc;
   border-radius: 8px;
-  border-left: 3px solid #409eff;
+  border-left: 3px solid var(--yc-ink);
 }
 
 .toc-title {
   font-size: 16px;
   font-weight: 600;
-  color: #303133;
+  color: var(--yc-text);
   margin-bottom: 8px;
   display: flex;
   align-items: center;
@@ -750,8 +752,8 @@ const goToChapter = (chapterId) => {
 }
 
 .toc-title.has-children:hover {
-  color: #409eff;
-  background-color: #f0f7ff;
+  color: var(--yc-ink);
+  background-color: rgba(22, 58, 60, 0.06);
   padding: 8px;
   margin: -8px;
   border-radius: 6px;
@@ -759,14 +761,14 @@ const goToChapter = (chapterId) => {
 
 .expand-icon {
   font-size: 14px;
-  color: #909399;
+  color: var(--yc-muted);
   transition: transform 0.3s ease;
   flex-shrink: 0;
 }
 
 .expand-icon.expanded {
   transform: rotate(90deg);
-  color: #409eff;
+  color: var(--yc-ink);
 }
 
 .toc-title-text {
@@ -776,7 +778,7 @@ const goToChapter = (chapterId) => {
 }
 
 .toc-title-text:hover {
-  color: #409eff;
+  color: var(--yc-ink);
 }
 
 .toc-child {
@@ -785,7 +787,7 @@ const goToChapter = (chapterId) => {
 }
 
 .toc-child:hover {
-  color: #409eff;
+  color: var(--yc-ink);
 }
 
 .toc-child-text {
@@ -795,13 +797,13 @@ const goToChapter = (chapterId) => {
 .toc-children {
   margin-top: 8px;
   padding-left: 28px;
-  border-left: 2px solid #e4e7ed;
+  border-left: 2px solid var(--yc-line);
 }
 
 .toc-child {
   padding: 6px 0;
   font-size: 15px;
-  color: #606266;
+  color: var(--yc-ink-soft);
 }
 
 .toc-child-text {

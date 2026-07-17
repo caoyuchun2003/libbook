@@ -218,13 +218,15 @@ const goBack = () => {
 <style scoped>
 .book-reader-page {
   min-height: 100vh;
-  background: #f5f7fa;
+  background:
+    radial-gradient(ellipse at top, rgba(22, 58, 60, 0.04), transparent 50%),
+    var(--yc-paper);
 }
 
 .reader-header {
-  background: #fff;
-  padding: 15px 30px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--yc-surface);
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--yc-line);
   display: flex;
   align-items: center;
   gap: 20px;
@@ -234,54 +236,56 @@ const goBack = () => {
 }
 
 .back-button {
-  color: #606266;
+  color: var(--yc-ink-soft);
   font-size: 15px;
   padding: 8px 0;
-  transition: all 0.3s;
+  transition: color 0.2s, transform 0.2s;
 }
 
 .back-button:hover {
-  color: #409eff;
+  color: var(--yc-ink);
   transform: translateX(-4px);
 }
 
 .book-title-header h2 {
   margin: 0;
-  font-size: 20px;
+  font-family: var(--yc-font-display);
+  font-size: 18px;
   font-weight: 600;
-  color: #303133;
+  color: var(--yc-text);
+  letter-spacing: 0.04em;
 }
 
 .reader-container {
   display: flex;
-  max-width: 1400px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 24px;
   gap: 20px;
 }
 
-/* 侧边栏 */
 .reader-sidebar {
-  width: 280px;
-  background: #fff;
+  width: 260px;
+  background: var(--yc-surface);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--yc-line);
   height: calc(100vh - 100px);
   display: flex;
   flex-direction: column;
   position: sticky;
-  top: 80px;
+  top: 72px;
 }
 
 .sidebar-header {
-  padding: 20px;
-  border-bottom: 1px solid #e4e7ed;
+  padding: 18px;
+  border-bottom: 1px solid var(--yc-line);
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  color: #303133;
+  color: var(--yc-text);
+  letter-spacing: 0.06em;
 }
 
 .sidebar-content {
@@ -297,23 +301,23 @@ const goBack = () => {
 .sidebar-chapter-title {
   padding: 10px 12px;
   font-size: 14px;
-  color: #606266;
+  color: var(--yc-ink-soft);
   cursor: pointer;
   border-radius: 6px;
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.3s;
+  transition: background 0.2s, color 0.2s;
 }
 
 .sidebar-chapter-title:hover {
-  background: #f0f7ff;
-  color: #409eff;
+  background: rgba(22, 58, 60, 0.06);
+  color: var(--yc-ink);
 }
 
 .sidebar-chapter-title.active {
-  background: #e6f4ff;
-  color: #409eff;
+  background: rgba(22, 58, 60, 0.1);
+  color: var(--yc-ink);
   font-weight: 600;
 }
 
@@ -323,14 +327,14 @@ const goBack = () => {
 
 .expand-icon {
   font-size: 12px;
-  color: #909399;
+  color: var(--yc-muted);
   transition: transform 0.3s ease;
   flex-shrink: 0;
 }
 
 .expand-icon.expanded {
   transform: rotate(90deg);
-  color: #409eff;
+  color: var(--yc-ink);
 }
 
 .chapter-title-text {
@@ -341,57 +345,58 @@ const goBack = () => {
   margin-left: 20px;
   margin-top: 4px;
   padding-left: 12px;
-  border-left: 2px solid #e4e7ed;
+  border-left: 2px solid var(--yc-line);
 }
 
 .sidebar-child-item {
   padding: 8px 12px;
   font-size: 13px;
-  color: #606266;
+  color: var(--yc-ink-soft);
   cursor: pointer;
   border-radius: 6px;
-  transition: all 0.3s;
+  transition: background 0.2s, color 0.2s;
 }
 
 .sidebar-child-item:hover {
-  background: #f0f7ff;
-  color: #409eff;
+  background: rgba(22, 58, 60, 0.06);
+  color: var(--yc-ink);
 }
 
 .sidebar-child-item.active {
-  background: #e6f4ff;
-  color: #409eff;
+  background: rgba(22, 58, 60, 0.1);
+  color: var(--yc-ink);
   font-weight: 500;
 }
 
-/* 主内容区 */
 .reader-main {
   flex: 1;
-  background: #fff;
+  background: var(--yc-surface);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  padding: 40px;
+  border: 1px solid var(--yc-line);
+  padding: 40px 48px;
   min-height: calc(100vh - 100px);
 }
 
 .chapter-content-wrapper {
-  max-width: 900px;
+  max-width: 720px;
   margin: 0 auto;
 }
 
 .chapter-title {
-  font-size: 32px;
+  font-family: var(--yc-font-display);
+  font-size: 28px;
   font-weight: 700;
-  color: #303133;
-  margin: 0 0 30px 0;
-  padding-bottom: 20px;
-  border-bottom: 3px solid #409eff;
+  color: var(--yc-text);
+  margin: 0 0 28px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--yc-ink);
+  letter-spacing: 0.04em;
 }
 
 .chapter-content {
-  line-height: 1.9;
-  color: #303133;
-  font-size: 16px;
+  line-height: 1.95;
+  color: var(--yc-text);
+  font-size: 17px;
   text-align: justify;
 }
 
@@ -400,27 +405,28 @@ const goBack = () => {
   text-align: justify;
 }
 
+.rich-content :deep(h1),
+.rich-content :deep(h2),
+.rich-content :deep(h3) {
+  font-family: var(--yc-font-display);
+  color: var(--yc-text);
+}
+
 .rich-content :deep(h1) {
-  font-size: 26px;
-  font-weight: 700;
-  color: #303133;
-  margin: 28px 0 18px 0;
+  font-size: 24px;
+  margin: 28px 0 16px;
   padding-bottom: 10px;
-  border-bottom: 2px solid #e4e7ed;
+  border-bottom: 1px solid var(--yc-line);
 }
 
 .rich-content :deep(h2) {
-  font-size: 24px;
-  font-weight: 600;
-  color: #303133;
-  margin: 24px 0 16px 0;
+  font-size: 22px;
+  margin: 24px 0 14px;
 }
 
 .rich-content :deep(h3) {
-  font-size: 20px;
-  font-weight: 600;
-  color: #303133;
-  margin: 20px 0 14px 0;
+  font-size: 18px;
+  margin: 20px 0 12px;
 }
 
 .rich-content :deep(ul),
@@ -435,35 +441,33 @@ const goBack = () => {
 }
 
 .rich-content :deep(strong) {
-  color: #303133;
+  color: var(--yc-text);
   font-weight: 600;
 }
 
 .rich-content :deep(em) {
   font-style: italic;
-  color: #606266;
+  color: var(--yc-ink-soft);
 }
 
 .rich-content :deep(img) {
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: 6px;
   margin: 20px 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .rich-content :deep(blockquote) {
-  border-left: 3px solid #409eff;
+  border-left: 3px solid var(--yc-ink);
   padding: 12px 18px;
   margin: 20px 0;
-  background: #f0f7ff;
+  background: rgba(22, 58, 60, 0.05);
   border-radius: 4px;
-  color: #606266;
+  color: var(--yc-ink-soft);
   font-style: italic;
   font-size: 15px;
 }
 
-/* 展开/折叠动画 */
 .slide-fade-enter-active {
   transition: all 0.3s ease-out;
 }
@@ -472,17 +476,12 @@ const goBack = () => {
   transition: all 0.2s ease-in;
 }
 
-.slide-fade-enter-from {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
+.slide-fade-enter-from,
 .slide-fade-leave-to {
   opacity: 0;
   transform: translateY(-10px);
 }
 
-/* 响应式设计 */
 @media (max-width: 992px) {
   .reader-container {
     flex-direction: column;
@@ -493,37 +492,34 @@ const goBack = () => {
     height: auto;
     position: relative;
     top: 0;
-    max-height: 400px;
+    max-height: 320px;
   }
 
   .reader-main {
     min-height: auto;
+    padding: 28px 20px;
   }
 }
 
 @media (max-width: 768px) {
   .reader-header {
-    padding: 12px 15px;
+    padding: 12px 16px;
   }
 
   .book-title-header h2 {
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .reader-container {
-    padding: 15px;
-  }
-
-  .reader-main {
-    padding: 25px 20px;
+    padding: 16px;
   }
 
   .chapter-title {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .chapter-content {
-    font-size: 15px;
+    font-size: 16px;
   }
 }
 </style>

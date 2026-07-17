@@ -40,7 +40,7 @@ const fallbackLabel = computed(() => (props.book?.title || '书').charAt(0))
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1a3a4a, #2d6a6a);
+  background: linear-gradient(135deg, #163a3c, #2a5558);
   color: #fff;
   font-size: 28px;
   font-family: Georgia, serif;

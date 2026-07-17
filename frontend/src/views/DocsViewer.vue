@@ -206,7 +206,7 @@ const goHome = () => {
 }
 
 .docs-header {
-  background-color: #409eff;
+  background-color: var(--yc-ink);
   color: white;
   padding: 0 20px;
   height: 60px;

@@ -1,10 +1,16 @@
 <template>
   <el-container class="main-layout">
-    <!-- Header -->
     <el-header class="main-header">
       <div class="header-content">
         <div class="header-left">
-          <h1 class="logo" @click="$router.push('/books')">📚 宇春书城</h1>
+          <button type="button" class="logo" @click="$router.push('/books')">
+            <svg class="logo-mark" viewBox="0 0 64 64" aria-hidden="true">
+              <rect width="64" height="64" rx="12" fill="currentColor" opacity="0.18"/>
+              <path d="M18 16h20c4 0 7 3 7 7v25H25c-4 0-7-3-7-7V16z" fill="#f7faf9" opacity=".92"/>
+              <path d="M18 16v25c0 4 3 7 7 7h20" stroke="#c4783a" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+            <span class="logo-text">宇春书城</span>
+          </button>
         </div>
         <div class="header-nav">
           <el-menu
@@ -20,10 +26,6 @@
             <el-menu-item index="/my-bookshelf">
               <el-icon><Collection /></el-icon>
               <span>书架</span>
-            </el-menu-item>
-            <el-menu-item index="/my-bookshelf">
-              <el-icon><Collection /></el-icon>
-              <span>我的</span>
             </el-menu-item>
           </el-menu>
         </div>
@@ -51,22 +53,20 @@
       </div>
     </el-header>
 
-    <!-- Main Content -->
     <el-main class="main-content">
       <router-view />
     </el-main>
 
-    <!-- Footer -->
     <el-footer class="main-footer">
       <div class="footer-content">
         <div class="footer-main">
           <div class="footer-left">
-            <h3 class="footer-title">📚 宇春书城</h3>
-            <p class="footer-desc">专业的图书管理系统</p>
+            <h3 class="footer-title">宇春书城</h3>
+            <p class="footer-desc">读好书，管好书</p>
           </div>
           <div class="footer-links">
             <div class="link-group">
-              <h4>快速链接</h4>
+              <h4>浏览</h4>
               <span @click="$router.push('/books')" class="link">书城</span>
               <span @click="$router.push('/my-bookshelf')" class="link">我的书架</span>
             </div>
@@ -77,7 +77,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>© 2026 宇春书城 - 图书管理系统 | All Rights Reserved</p>
+          <p>© 2026 宇春书城</p>
         </div>
       </div>
     </el-footer>
@@ -96,8 +96,8 @@ const router = useRouter()
 const authStore = useAuthStore()
 
 const activeNav = computed(() => {
-  if (route.path.startsWith('/books')) return '/books'
   if (route.path.startsWith('/my-bookshelf')) return '/my-bookshelf'
+  if (route.path.startsWith('/books')) return '/books'
   return '/books'
 })
 
@@ -119,53 +119,75 @@ const handleCommand = async (command) => {
   flex-direction: column;
 }
 
-/* Header Styles */
 .main-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.06), transparent 40%),
+    var(--yc-ink);
   color: white;
   padding: 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   position: sticky;
   top: 0;
   z-index: 1000;
-  height: 80px !important;
-  backdrop-filter: blur(10px);
+  height: 72px !important;
+  animation: headerIn 0.45s ease-out;
+}
+
+@keyframes headerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .header-content {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 24px;
   height: 100%;
-  gap: 20px;
+  gap: 16px;
 }
 
 .header-left {
   flex-shrink: 0;
-  min-width: 180px;
 }
 
 .logo {
   margin: 0;
-  font-size: 32px;
-  font-weight: 800;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: white;
-  letter-spacing: 1.5px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  transition: transform 0.3s, opacity 0.3s;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  transition: opacity 0.25s, transform 0.25s;
 }
 
 .logo:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.logo-mark {
+  width: 36px;
+  height: 36px;
+  color: #fff;
+}
+
+.logo-text {
+  font-family: var(--yc-font-display);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .header-nav {
@@ -175,170 +197,80 @@ const handleCommand = async (command) => {
   min-width: 0;
 }
 
-.header-nav :deep(.el-menu) {
-  display: flex;
-  flex-wrap: nowrap;
-}
-
 .header-menu {
   background: transparent !important;
   border: none !important;
-  color: white;
-}
-
-/* 移除 el-menu 的所有默认样式 */
-:deep(.header-menu) {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-:deep(.header-menu::before),
-:deep(.header-menu::after) {
-  display: none !important;
-}
-
-/* 移除菜单项的所有默认边框和装饰 */
-:deep(.header-menu .el-menu-item) {
-  border: none !important;
-  border-bottom: none !important;
-  border-top: none !important;
-  border-left: none !important;
-  border-right: none !important;
-}
-
-:deep(.header-menu .el-menu-item::before),
-:deep(.header-menu .el-menu-item::after) {
-  display: none !important;
-  content: none !important;
 }
 
 :deep(.header-menu .el-menu-item) {
-  color: white !important;
-  font-size: 20px !important;
+  color: rgba(255, 255, 255, 0.82) !important;
+  font-size: 15px !important;
   font-weight: 500 !important;
-  height: 80px;
-  line-height: 80px;
-  padding: 0 40px !important;
+  height: 72px;
+  line-height: 72px;
+  padding: 0 22px !important;
   border: none !important;
-  border-bottom: none !important;
-  transition: all 0.2s;
-  text-shadow: none;
-  white-space: nowrap;
-  min-width: auto;
-  border-radius: 0 !important;
-  margin: 0 !important;
   background: transparent !important;
+  transition: color 0.2s, background 0.2s;
 }
 
-:deep(.header-menu .el-menu-item::before),
-:deep(.header-menu .el-menu-item::after) {
-  display: none !important;
-}
-
-:deep(.header-menu .el-menu-item .el-icon) {
-  font-size: 20px !important;
-  margin-right: 8px;
-  vertical-align: middle;
-}
-
-:deep(.header-menu .el-menu-item span) {
-  font-size: 20px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0;
-  text-shadow: none;
-  display: inline-block;
-  white-space: nowrap;
-}
-
-:deep(.header-menu .el-menu-item:hover) {
-  color: white !important;
+:deep(.header-menu .el-menu-item:hover),
+:deep(.header-menu .el-menu-item.is-active) {
+  color: #fff !important;
   background: rgba(255, 255, 255, 0.1) !important;
-  border-bottom: none;
-  transform: none;
 }
 
 :deep(.header-menu .el-menu-item.is-active) {
-  color: white !important;
-  background: rgba(255, 255, 255, 0.15) !important;
-  border-bottom: none;
-  font-weight: 600 !important;
-  text-shadow: none;
-  box-shadow: none;
+  box-shadow: inset 0 -2px 0 var(--yc-accent);
 }
 
 .header-right {
   flex-shrink: 0;
-  min-width: 150px;
 }
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
-  padding: 10px 18px;
+  padding: 8px 14px;
   border-radius: 8px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.user-info .el-icon {
-  font-size: 18px;
-  transition: transform 0.3s;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  transition: background 0.2s, border-color 0.2s;
 }
 
 .user-info:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
 }
 
-.user-info:hover .el-icon:last-child {
-  transform: rotate(180deg);
-}
-
-/* Main Content */
 .main-content {
   flex: 1;
-  padding: 20px;
-  background-color: #f5f7fa;
-  min-height: calc(100vh - 160px);
-  max-width: 1400px;
+  padding: 28px 24px 40px;
+  background:
+    radial-gradient(ellipse at top, rgba(22, 58, 60, 0.04), transparent 55%),
+    var(--yc-paper);
+  min-height: calc(100vh - 72px - 180px);
+  max-width: 1200px;
   width: 100%;
   margin: 0 auto;
 }
 
-/* Footer Styles */
 .main-footer {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
-  color: #ecf0f1;
-  padding: 40px 20px 30px !important;
+  background: var(--yc-ink) !important;
+  color: rgba(247, 250, 249, 0.78);
+  padding: 36px 24px 24px !important;
   margin-top: auto;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-  min-height: 200px !important;
-  width: 100% !important;
   height: auto !important;
-}
-
-:deep(.el-footer) {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
-  padding: 0 !important;
-  height: auto !important;
-  min-height: 200px !important;
-}
-
-:deep(.el-footer.main-footer) {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+  min-height: auto !important;
 }
 
 .footer-content {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -346,100 +278,65 @@ const handleCommand = async (command) => {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 30px;
-  padding-bottom: 30px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-left {
-  flex: 1;
+  gap: 32px;
 }
 
 .footer-title {
-  margin: 0 0 10px 0;
-  font-size: 24px;
-  font-weight: 700;
+  margin: 0 0 8px;
+  font-size: 20px;
   color: #fff;
-  letter-spacing: 1px;
+  font-family: var(--yc-font-display);
 }
 
 .footer-desc {
   margin: 0;
   font-size: 14px;
-  color: #bdc3c7;
-  line-height: 1.6;
+  color: rgba(247, 250, 249, 0.55);
 }
 
 .footer-links {
   display: flex;
-  gap: 60px;
+  gap: 48px;
 }
 
 .link-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .link-group h4 {
-  margin: 0 0 8px 0;
-  font-size: 16px;
+  margin: 0 0 4px;
+  font-size: 13px;
   font-weight: 600;
-  color: #fff;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.04em;
 }
 
 .link-group .link {
-  color: #bdc3c7;
+  color: rgba(247, 250, 249, 0.55);
   cursor: pointer;
-  transition: all 0.3s;
+  transition: color 0.2s;
   font-size: 14px;
-  padding: 4px 0;
-  display: inline-block;
 }
 
 .link-group .link:hover {
-  color: #409eff;
-  transform: translateX(4px);
+  color: var(--yc-accent);
 }
 
 .footer-bottom {
   text-align: center;
-  padding-top: 20px;
-  padding-bottom: 10px;
 }
 
 .footer-bottom p {
   margin: 0;
   font-size: 13px;
-  color: #95a5a6;
-  line-height: 1.8;
+  color: rgba(247, 250, 249, 0.4);
 }
 
-/* 响应式 */
-@media (max-width: 768px) {
-  .main-footer {
-    padding: 30px 15px 15px;
-  }
-
-  .footer-main {
-    flex-direction: column;
-    gap: 30px;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-  }
-
-  .footer-links {
-    flex-direction: column;
-    gap: 30px;
-    width: 100%;
-  }
-
-  .footer-title {
-    font-size: 20px;
-  }
-}
-
-/* Responsive */
 @media (max-width: 768px) {
   .main-header {
     height: auto !important;
@@ -447,17 +344,16 @@ const handleCommand = async (command) => {
 
   .header-content {
     flex-wrap: wrap;
-    padding: 15px;
+    padding: 12px 16px;
   }
 
-  .logo {
-    font-size: 24px;
+  .logo-text {
+    font-size: 20px;
   }
 
   .header-nav {
     order: 3;
     width: 100%;
-    margin-top: 15px;
   }
 
   .header-menu {
@@ -465,29 +361,23 @@ const handleCommand = async (command) => {
   }
 
   :deep(.header-menu .el-menu-item) {
-    height: 60px;
-    line-height: 60px;
-    font-size: 20px !important;
-    padding: 0 25px !important;
-  }
-
-  :deep(.header-menu .el-menu-item span) {
-    font-size: 20px !important;
-    font-weight: 700 !important;
-  }
-
-  :deep(.header-menu .el-menu-item .el-icon) {
-    font-size: 22px !important;
-  }
-
-  .user-info {
-    font-size: 14px;
-    padding: 8px 12px;
+    height: 48px;
+    line-height: 48px;
+    padding: 0 16px !important;
+    flex: 1;
+    justify-content: center;
   }
 
   .main-content {
-    padding: 15px;
-    min-height: calc(100vh - 180px);
+    padding: 20px 16px 32px;
+  }
+
+  .footer-main {
+    flex-direction: column;
+  }
+
+  .footer-links {
+    gap: 24px;
   }
 }
 </style>
